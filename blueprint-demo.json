@@ -1,0 +1,32 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/product/kebaya-dress/",
+	"login": true,
+	"features": { "networking": true },
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginData": { "resource": "wordpress.org/plugins", "slug": "woocommerce" },
+			"options": { "activate": true }
+		},
+		{
+			"step": "installTheme",
+			"themeData": { "resource": "wordpress.org/themes", "slug": "storefront" },
+			"options": { "activate": true }
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/Waynra/order-on-whatsapp",
+				"ref": "main",
+				"path": "/"
+			},
+			"options": { "activate": true, "targetFolderName": "order-on-whatsapp" }
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php\nrequire '/wordpress/wp-load.php';\nupdate_option( 'permalink_structure', '/%postname%/' );\nupdate_option( 'blogname', 'Toko Nusantara' );\nupdate_option( 'woocommerce_coming_soon', 'no' );\nupdate_option( 'woocommerce_onboarding_profile', array( 'skipped' => true ) );\nupdate_option( 'woocommerce_currency', 'IDR' );\nupdate_option( 'woocommerce_currency_pos', 'left' );\nupdate_option( 'woocommerce_price_thousand_sep', '.' );\nupdate_option( 'woocommerce_price_decimal_sep', ',' );\nupdate_option( 'woocommerce_price_num_decimals', '0' );\nif ( method_exists( 'WC_Install', 'create_pages' ) ) { WC_Install::create_pages(); }\nupdate_option( 'oow_settings', array( 'phone' => '6280000000000', 'show_on_shop' => 1 ) );\nforeach ( array( array( 'Batik Parang Shirt', '185000', 'BTK-001' ), array( 'Tenun Ikat Scarf', '120000', 'TNN-002' ) ) as $row ) {\n\t$p = new WC_Product_Simple();\n\t$p->set_name( $row[0] );\n\t$p->set_regular_price( $row[1] );\n\t$p->set_sku( $row[2] );\n\t$p->set_status( 'publish' );\n\t$p->save();\n}\n$size = new WC_Product_Attribute();\n$size->set_name( 'Size' );\n$size->set_options( array( 'S', 'M', 'L' ) );\n$size->set_visible( true );\n$size->set_variation( true );\n$dress = new WC_Product_Variable();\n$dress->set_name( 'Kebaya Dress' );\n$dress->set_sku( 'KBY-003' );\n$dress->set_attributes( array( $size ) );\n$dress->set_status( 'publish' );\n$dress->save();\nforeach ( array( 'S' => '250000', 'M' => '265000', 'L' => '280000' ) as $label => $price ) {\n\t$v = new WC_Product_Variation();\n\t$v->set_parent_id( $dress->get_id() );\n\t$v->set_attributes( array( 'size' => $label ) );\n\t$v->set_regular_price( $price );\n\t$v->set_sku( 'KBY-003-' . $label );\n\t$v->save();\n}\nWC_Product_Variable::sync( $dress->get_id() );\nflush_rewrite_rules();\n"
+		}
+	]
+}
