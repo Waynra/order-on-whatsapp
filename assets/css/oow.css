@@ -1,0 +1,123 @@
+/* Order on WhatsApp. Override --oow-bg / --oow-bg-hover / --oow-fg / --oow-floating-bottom in your theme. */
+:root {
+	--oow-bg: #008069;
+	--oow-bg-hover: #006652;
+	--oow-fg: #fff;
+	--oow-floating-bottom: 20px;
+}
+
+/* Storefront shows a fixed toolbar at the bottom on phones; sit above it instead of covering it. */
+@media (max-width: 767px) {
+	body:has(.storefront-handheld-footer-bar) {
+		--oow-floating-bottom: 85px;
+	}
+}
+
+a.oow-button,
+a.oow-button:visited {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	padding: 0.7em 1.2em;
+	border: 0;
+	border-radius: 4px;
+	background: var(--oow-bg);
+	color: var(--oow-fg);
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+
+a.oow-button:hover,
+a.oow-button:focus {
+	background: var(--oow-bg-hover);
+	color: var(--oow-fg);
+	text-decoration: none;
+}
+
+a.oow-button:focus-visible,
+a.oow-floating:focus-visible {
+	outline: 2px solid var(--oow-bg);
+	outline-offset: 3px;
+}
+
+a.oow-button.is-disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.oow-icon {
+	width: 1.25em;
+	height: 1.25em;
+	flex-shrink: 0;
+}
+
+/* Full-width row under the quantity + Add to cart controls. */
+a.oow-button--product {
+	display: flex;
+	clear: both;
+	width: 100%;
+	margin-top: 1em;
+}
+
+a.oow-button--loop {
+	margin-top: 0.5em;
+	font-size: 0.875em;
+}
+
+a.oow-button--cart {
+	display: flex;
+	width: 100%;
+	margin-top: 0.75em;
+}
+
+a.oow-floating {
+	position: fixed;
+	bottom: calc(var(--oow-floating-bottom) + env(safe-area-inset-bottom, 0px));
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: var(--oow-bg);
+	color: var(--oow-fg);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+	transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+a.oow-floating:hover,
+a.oow-floating:focus {
+	background: var(--oow-bg-hover);
+	color: var(--oow-fg);
+	transform: scale(1.05);
+}
+
+a.oow-floating .oow-icon {
+	width: 30px;
+	height: 30px;
+}
+
+.oow-floating--right {
+	right: 20px;
+}
+
+.oow-floating--left {
+	left: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	a.oow-button,
+	a.oow-floating {
+		transition: none;
+	}
+
+	a.oow-floating:hover,
+	a.oow-floating:focus {
+		transform: none;
+	}
+}
