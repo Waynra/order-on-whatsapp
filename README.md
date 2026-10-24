@@ -4,6 +4,8 @@ A WordPress plugin that lets shoppers send an order to the store's WhatsApp numb
 
 Built for small shops that still close most sales in WhatsApp chats.
 
+**[▶ Try the live demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/Waynra/order-on-whatsapp/main/blueprint-demo.json)** — a full WooCommerce store with this plugin, running in your browser via WordPress Playground. Nothing to install; it takes about a minute to load.
+
 ![Product page with the WhatsApp button under Add to cart and the floating chat button](screenshots/product-page.png)
 
 Message sent when the shopper picks size M and quantity 2:
@@ -81,7 +83,8 @@ order-on-whatsapp/
 ├── assets/
 │   ├── css/oow.css
 │   └── js/oow.js                Live message updates + cart via Store API
-├── blueprint.json               One-command demo store (WordPress Playground)
+├── blueprint.json               Local demo store (mounts this folder)
+├── blueprint-demo.json          Browser demo (installs the plugin from GitHub)
 ├── screenshots/
 ├── uninstall.php
 └── readme.txt                   WordPress.org format
@@ -89,9 +92,11 @@ order-on-whatsapp/
 
 ## Run the demo locally
 
-Needs Node.js 20+. From this folder:
+Needs Node.js 20+.
 
 ```bash
+git clone https://github.com/Waynra/order-on-whatsapp.git
+cd order-on-whatsapp
 npx @wp-playground/cli@3.1.54 server --auto-mount --blueprint=blueprint.json
 ```
 
@@ -99,7 +104,7 @@ This starts WordPress at http://127.0.0.1:9400 with WooCommerce, the Storefront 
 
 ## Install on a real site
 
-1. Zip the `order-on-whatsapp` folder and upload it in **Plugins > Add New > Upload Plugin**, then activate.
+1. Download the code (**Code > Download ZIP**), rename the folder inside to `order-on-whatsapp` and zip it again, then upload it in **Plugins > Add New > Upload Plugin** and activate.
 2. Open **Settings > Order on WhatsApp** and enter the number with the country code, without `+` or a leading `0` (e.g. `6281234567890`).
 
 ## Message placeholders
@@ -110,6 +115,10 @@ This starts WordPress at http://127.0.0.1:9400 with WooCommerce, the Storefront 
 | Cart | `{items}` `{count}` `{total}` |
 
 WhatsApp formatting works in templates, e.g. `*bold*`.
+
+## Author
+
+Wahyu Nur Agustusanto — [wahyunur.runs-on.dev](https://wahyunur.runs-on.dev/)
 
 ## License
 
